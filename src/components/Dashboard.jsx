@@ -63,7 +63,7 @@ export function Dashboard() {
 				case "priority":
 					return b.priority - a.priority;
 				case "created_at":
-					return new Date(a.created_at) - new Date(b.created_at);
+					return new Date(b.created_at) - new Date(a.created_at);
 				case "deadline":
 					return new Date(a.deadline) - new Date(b.deadline);
 				default:
@@ -115,13 +115,21 @@ export function Dashboard() {
 							placeholder="Search"
 							value={search}
 							onChange={(e) => setSearch(e.target.value)}
-							style={{ flex: 3, marginRight: "10px" }}
 						/>
-
+					</div>
+					<div
+						style={{
+							display: "flex",
+							alignItems: "center",
+							width: "100%",
+							margin: "10px",
+							marginLeft: "-1px",
+						}}
+					>
 						{/* Sorting Dropdown */}
 						<FormControl
 							style={{
-								flex: 1,
+								flex: 3,
 								marginRight: "10px",
 								minWidth: "16vh",
 							}}
@@ -144,7 +152,13 @@ export function Dashboard() {
 						</FormControl>
 
 						{/* Filtering Dropdown */}
-						<FormControl style={{ flex: 1, minWidth: "17vh" }}>
+						<FormControl
+							style={{
+								flex: 1,
+								minWidth: "17vh",
+								marginRight: "10px",
+							}}
+						>
 							<InputLabel
 								style={{
 									backgroundColor: "white",
@@ -165,6 +179,15 @@ export function Dashboard() {
 								))}
 							</Select>
 						</FormControl>
+						<CreateTodoModal
+							updateTodos={getTodos}
+							fullWidth
+							style={{
+								flex: 1,
+								marginRight: "10px",
+								minHeight: "100%",
+							}}
+						/>
 					</div>
 
 					{/* Display filtered and sorted todos */}
@@ -186,10 +209,6 @@ export function Dashboard() {
 								/>
 							))}
 					</div>
-
-					<br />
-					<br />
-					<CreateTodoModal updateTodos={getTodos} />
 				</div>
 			</div>
 		</>
