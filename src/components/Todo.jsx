@@ -33,9 +33,7 @@ export function Todo({ id, title, is_completed, priority, updateTodos }) {
 	useEffect(() => {
 		const getTodo = async () => {
 			const todo = await fetchTodoById(id);
-			if (todo) {
-				setDeadline(todo.deadline);
-			}
+			if (todo) setDeadline(todo.deadline);
 		};
 		getTodo();
 	}, [id]);
@@ -92,9 +90,8 @@ export function Todo({ id, title, is_completed, priority, updateTodos }) {
 				}
 			);
 
-			if (!response.ok) {
+			if (!response.ok)
 				throw new Error(`HTTP error! status: ${response.status}`);
-			}
 
 			is_completed
 				? toast.success("Undone")
@@ -115,9 +112,8 @@ export function Todo({ id, title, is_completed, priority, updateTodos }) {
 				}
 			);
 
-			if (!response.ok) {
+			if (!response.ok)
 				throw new Error(`HTTP error! status: ${response.status}`);
-			}
 
 			const data = await response.json();
 			toast.success(data.message);
