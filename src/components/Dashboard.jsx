@@ -12,14 +12,18 @@ export function Dashboard() {
 	const username = localStorage.getItem("username");
 
 	const [todolist, setTodoList] = useState([]);
+	const [uniquePriorities, setUniquePriorities] = useState([]);
 	const [search, setSearch] = useState("");
 	const [sortBy, setSortBy] = useState("priority");
-	const [filterByTime, setFilterByTime] = useState("all");
+	const [filterByPriority, setFilterByPriority] = useState("all");
 
 	async function getTodos() {
 		const r = await fetch("http://3.109.211.104:8001/todos");
 		const j = await r.json();
 		setTodoList(j);
+		// Extract unique priority values from the fetched todos
+		const priorities = Array.from(new Set(j.map((todo) => todo.priority)));
+		setUniquePriorities(priorities);
 	}
 
 	useEffect(() => {
@@ -40,30 +44,26 @@ export function Dashboard() {
 
 	// Filtering function
 	const handleFilterChange = (event) => {
-		setFilterByTime(event.target.value);
+		setFilterByPriority(event.target.value);
 	};
 
 	// Apply sorting and filtering
 	const sortedAndFilteredTodos = todolist
 		.filter((todo) => {
-			const deadline = new Date(todo.deadline);
-			const now = new Date();
-
-			switch (filterByTime) {
-				case "24h":
-					return deadline - now <= 24 * 60 * 60 * 1000; // Within 24 hours
-				case "nextweek":
-					return deadline - now <= 7 * 24 * 60 * 60 * 1000; // 7 days
-				case "overdue":
-					return deadline < now; // Overdue
-				default:
-					return true; // No filtering
+			if (
+				filterByPriority !== "all" &&
+				todo.priority !== parseInt(filterByPriority)
+			) {
+				return false;
 			}
+			return true;
 		})
 		.sort((a, b) => {
 			switch (sortBy) {
 				case "priority":
 					return b.priority - a.priority;
+				case "created_at":
+					return new Date(a.created_at) - new Date(b.created_at);
 				case "deadline":
 					return new Date(a.deadline) - new Date(b.deadline);
 				default:
@@ -136,30 +136,33 @@ export function Dashboard() {
 							</InputLabel>
 							<Select value={sortBy} onChange={handleSortChange}>
 								<MenuItem value="priority">Priority</MenuItem>
+								<MenuItem value="created_at">
+									Date Created
+								</MenuItem>
 								<MenuItem value="deadline">Deadline</MenuItem>
 							</Select>
 						</FormControl>
 
 						{/* Filtering Dropdown */}
-						<FormControl style={{ flex: 1 }}>
+						<FormControl style={{ flex: 1, minWidth: "17vh" }}>
 							<InputLabel
 								style={{
 									backgroundColor: "white",
-									margin: "1px",
+									marginLeft: "1px",
 								}}
 							>
-								Filter
+								Filter (By Priority)
 							</InputLabel>
 							<Select
-								value={filterByTime}
+								value={filterByPriority}
 								onChange={handleFilterChange}
 							>
 								<MenuItem value="all">All</MenuItem>
-								<MenuItem value="24h">Next 24 hours</MenuItem>
-								<MenuItem value="nextweek">
-									Next 7 days
-								</MenuItem>
-								<MenuItem value="overdue">Overdue</MenuItem>
+								{uniquePriorities.map((priority, index) => (
+									<MenuItem key={index} value={priority}>
+										{priority}
+									</MenuItem>
+								))}
 							</Select>
 						</FormControl>
 					</div>
