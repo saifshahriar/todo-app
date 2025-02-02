@@ -7,6 +7,7 @@ import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore
 import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import DoneIcon from "@mui/icons-material/Done";
 
+// eslint-disable-next-line react/prop-types
 export function Todo({ id, title, is_completed, priority, updateTodos }) {
 	const [countdown, setCountdown] = useState("");
 	const [deadline, setDeadline] = useState(null);
