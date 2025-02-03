@@ -131,7 +131,11 @@ export function Todo({ id, title, is_completed, priority, updateTodos }) {
 				border: "1px solid black",
 				borderRadius: "10px",
 				backgroundColor:
-					priority > 8 ? "rgba(255,0,0,0.3)" : "rgba(0,255,0,0.3)",
+					priority >= 9
+						? "#FF4C4C" // Bright Red
+						: priority >= 6
+							? "#FF8888" // Less Reddish
+							: "#ECFAF4", // Greenish
 			}}
 		>
 			<div>
