@@ -101,6 +101,18 @@ export function Dashboard() {
 							<Button
 								variant="outlined"
 								size="large"
+								color="info"
+								component="a"
+								href="/profile"
+								target="_blank"
+							>
+								Profile
+							</Button>
+						</div>
+						<div>
+							<Button
+								variant="outlined"
+								size="large"
 								color="error"
 								onClick={logoutClick}
 							>
