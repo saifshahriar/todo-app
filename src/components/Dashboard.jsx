@@ -16,11 +16,18 @@ export function Dashboard() {
 	const [search, setSearch] = useState("");
 	const [sortBy, setSortBy] = useState("priority");
 	const [filterByPriority, setFilterByPriority] = useState("all");
+	const [taskCount, setTaskCount] = useState(0);
+	const [completedTaskCount, setCompletedTaskCount] = useState(0);
 
 	async function getTodos() {
 		const r = await fetch("http://3.109.211.104:8001/todos");
 		const j = await r.json();
+
 		setTodoList(j);
+		setTaskCount(j.length);
+
+		setCompletedTaskCount(j.filter((todo) => todo.is_completed).length);
+
 		// Extract unique priority values from the fetched todos
 		const priorities = Array.from(new Set(j.map((todo) => todo.priority)));
 		setUniquePriorities(priorities);
@@ -100,6 +107,40 @@ export function Dashboard() {
 								Logout
 							</Button>
 						</div>
+					</div>
+					<div
+						style={{
+							marginTop: "-20px",
+							marginBottom: "10px",
+						}}
+					>
+						<h3>
+							You have{" "}
+							{completedTaskCount <= 0 ? (
+								`no tasks completed out of ${taskCount}`
+							) : (
+								<>
+									<span
+										style={{
+											color: "green",
+											backgroundColor: "#d4f4d2",
+											borderRadius: "50%",
+											border: "2px solid green",
+											width: "30px",
+											height: "30px",
+											display: "inline-flex",
+											alignItems: "center",
+											justifyContent: "center",
+											fontWeight: "bold",
+											margin: "0 5px",
+										}}
+									>
+										{completedTaskCount}
+									</span>
+									{` out of ${taskCount} tasks completed.`}
+								</>
+							)}
+						</h3>
 					</div>
 
 					{/* Search bar + Sorting & Filtering dropdowns */}
