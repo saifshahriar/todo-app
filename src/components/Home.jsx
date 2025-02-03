@@ -5,24 +5,24 @@ const styles = {
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
-		flexDirection: "column", // Stack everything vertically after the buttons
+		flexDirection: "column",
 	},
 	buttonsContainer: {
 		display: "flex",
-		justifyContent: "center", // Center buttons horizontally
-		marginBottom: "20px", // Space below the buttons
+		justifyContent: "center",
+		marginBottom: "20px",
 	},
 	centeredDiv: {
-		margin: "10px", // Spacing between the buttons
+		margin: "10px",
 	},
 	hr: {
-		width: "200px", // Set the width of the line relative to the "New here?" text
-		margin: "20px 0", // Space before and after the line
+		width: "200px",
+		margin: "20px 0",
 		border: "0",
-		borderTop: "1px solid #ccc", // Horizontal line style
+		borderTop: "1px solid #ccc",
 	},
 	footerText: {
-		marginBottom: "10px", // Space before the create account button
+		marginBottom: "10px",
 	},
 };
 
