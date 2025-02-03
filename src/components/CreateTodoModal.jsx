@@ -16,16 +16,19 @@ const style = {
 	alignItems: "center",
 	justifyContent: "center",
 };
+// eslint-disable-next-line react/prop-types
 export function CreateTodoModal({ updateTodos }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [title, setTitle] = useState("");
 	const [priority, setPriority] = useState("0");
+	const [description, setDescription] = useState("");
+	//const [deadline, setDeadline] = useState("");
 
 	async function createTodoClick() {
 		const body = {
 			title: title,
-			description: "string",
-			deadline: "2025-01-29T16:34:37.131Z",
+			description: description,
+			deadline: "2025-12-29T16:34:37.131Z",
 			priority: parseInt(priority),
 		};
 		const r = await fetch("http://3.109.211.104:8001/todo", {
@@ -39,6 +42,8 @@ export function CreateTodoModal({ updateTodos }) {
 		console.log(j);
 		toast.success("Todo created");
 		setTitle("");
+		setDescription("");
+		setDeadline("");
 		setPriority("");
 		setIsOpen(false);
 		updateTodos();
@@ -65,6 +70,20 @@ export function CreateTodoModal({ updateTodos }) {
 						/>
 						<br />
 						<br />
+						<TextField
+							placeholder="Description"
+							value={description}
+							onChange={(e) => setDescription(e.target.value)}
+						/>
+						<br />
+						<br />
+						{/*<TextField
+							placeholder="Deadline"
+							value={deadline}
+							onChange={(e) => setDeadline(e.target.value)}
+						/>
+						<br />
+						<br />*/}
 						<TextField
 							placeholder="Priority"
 							value={priority}
