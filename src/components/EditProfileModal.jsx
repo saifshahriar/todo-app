@@ -100,12 +100,14 @@ export function EditProfileModal({ updateProfile }) {
 					<div style={{ backgroundColor: "white", padding: "20px" }}>
 						<h1>Edit Profile</h1>
 						<br />
+						<br />
 						<TextField
 							placeholder="Name"
 							value={name}
 							onChange={(e) => setName(e.target.value)}
 							fullWidth
 						/>
+						<br />
 						<br />
 						<TextField
 							placeholder="Email"
@@ -114,12 +116,14 @@ export function EditProfileModal({ updateProfile }) {
 							fullWidth
 						/>
 						<br />
+						<br />
 						<TextField
 							placeholder="Phone"
 							value={phone}
 							onChange={(e) => setPhone(e.target.value)}
 							fullWidth
 						/>
+						<br />
 						<br />
 						<Button
 							onClick={updateProfileClick}
