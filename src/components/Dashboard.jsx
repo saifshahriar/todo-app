@@ -20,7 +20,9 @@ export function Dashboard() {
 	const [completedTaskCount, setCompletedTaskCount] = useState(0);
 
 	async function getTodos() {
-		const r = await fetch("http://3.109.211.104:8001/todos");
+		const r = await fetch(
+			"https://5nvfy5p7we.execute-api.ap-south-1.amazonaws.com/dev/todos"
+		);
 		const j = await r.json();
 
 		setTodoList(j);

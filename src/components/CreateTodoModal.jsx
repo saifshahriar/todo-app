@@ -31,19 +31,22 @@ export function CreateTodoModal({ updateTodos }) {
 			deadline: "2025-12-29T16:34:37.131Z",
 			priority: parseInt(priority),
 		};
-		const r = await fetch("http://3.109.211.104:8001/todo", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(body),
-		});
+		const r = await fetch(
+			"https://5nvfy5p7we.execute-api.ap-south-1.amazonaws.com/dev/todo",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(body),
+			}
+		);
 		const j = await r.json();
 		console.log(j);
 		toast.success("Todo created");
 		setTitle("");
 		setDescription("");
-		setDeadline("");
+		//setDeadline("");
 		setPriority("");
 		setIsOpen(false);
 		updateTodos();

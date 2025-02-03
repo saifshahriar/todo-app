@@ -28,13 +28,16 @@ function Create() {
 			password: pass,
 			profile_picture: "",
 		};
-		const response = await fetch("http://3.109.211.104:8001/register", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(body),
-		});
+		const response = await fetch(
+			"https://5nvfy5p7we.execute-api.ap-south-1.amazonaws.com/dev/register",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(body),
+			}
+		);
 		const data = await response.json();
 		toast.success(data.message);
 		setName("");

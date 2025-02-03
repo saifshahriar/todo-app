@@ -18,7 +18,7 @@ export function Todo({ id, title, is_completed, priority, updateTodos }) {
 	const fetchTodoById = async (id) => {
 		try {
 			const fetchResponse = await fetch(
-				"http://3.109.211.104:8001/todos"
+				"https://5nvfy5p7we.execute-api.ap-south-1.amazonaws.com/dev/todos"
 			);
 			if (!fetchResponse.ok)
 				throw new Error(`Fetch failed! HTTP ${fetchResponse.status}`);
@@ -100,7 +100,7 @@ export function Todo({ id, title, is_completed, priority, updateTodos }) {
 		};
 		try {
 			const response = await fetch(
-				`http://3.109.211.104:8001/todo/${id}`,
+				`https://5nvfy5p7we.execute-api.ap-south-1.amazonaws.com/dev/todo/${id}`,
 				{
 					method: "PUT",
 					headers: {
@@ -126,7 +126,7 @@ export function Todo({ id, title, is_completed, priority, updateTodos }) {
 	async function handleDelete() {
 		try {
 			const response = await fetch(
-				`http://3.109.211.104:8001/todo/${id}`,
+				`https://5nvfy5p7we.execute-api.ap-south-1.amazonaws.com/dev/todo/${id}`,
 				{
 					method: "DELETE",
 				}
