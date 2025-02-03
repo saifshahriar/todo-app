@@ -11,6 +11,8 @@ import DoneIcon from "@mui/icons-material/Done";
 export function Todo({ id, title, is_completed, priority, updateTodos }) {
 	const [countdown, setCountdown] = useState("");
 	const [deadline, setDeadline] = useState(null);
+	const [description, setDescription] = useState("");
+	const [creationTime, setCreationTime] = useState("");
 
 	// Reusable function to fetch the todo by ID
 	const fetchTodoById = async (id) => {
@@ -30,6 +32,7 @@ export function Todo({ id, title, is_completed, priority, updateTodos }) {
 		}
 	};
 
+	// count deadline
 	useEffect(() => {
 		const getTodo = async () => {
 			const todo = await fetchTodoById(id);
@@ -38,7 +41,6 @@ export function Todo({ id, title, is_completed, priority, updateTodos }) {
 		getTodo();
 	}, [id]);
 
-	// count deadline
 	useEffect(() => {
 		if (deadline) {
 			const interval = setInterval(() => {
@@ -68,6 +70,24 @@ export function Todo({ id, title, is_completed, priority, updateTodos }) {
 			return () => clearInterval(interval);
 		}
 	}, [deadline]);
+
+	// description
+	useEffect(() => {
+		const getTodo = async () => {
+			const todo = await fetchTodoById(id);
+			if (todo) setDescription(todo.description);
+		};
+		getTodo();
+	}, [description]);
+
+	// description
+	useEffect(() => {
+		const getTodo = async () => {
+			const todo = await fetchTodoById(id);
+			if (todo) setCreationTime(Date(todo.created_at));
+		};
+		getTodo();
+	}, [creationTime]);
 
 	// mark as completed
 	async function handleUpdate() {
@@ -139,6 +159,7 @@ export function Todo({ id, title, is_completed, priority, updateTodos }) {
 			}}
 		>
 			<div>
+				{/* Icon */}
 				<span
 					style={{
 						color: !is_completed ? "goldenrod" : "green",
@@ -151,6 +172,7 @@ export function Todo({ id, title, is_completed, priority, updateTodos }) {
 						<HourglassTopIcon style={{ fontSize: "40px" }} />
 					)}
 				</span>
+				{/* Todo Title */}
 				<span
 					style={{
 						fontSize: "30px",
@@ -160,15 +182,34 @@ export function Todo({ id, title, is_completed, priority, updateTodos }) {
 					{title}
 				</span>
 			</div>
-			{is_completed ? (
-				""
-			) : (
-				<div>
+
+			{/* Description */}
+			<div
+				style={{
+					fontSize: "15px",
+					textDecoration: is_completed ? "line-through" : "",
+				}}
+			>
+				<strong>Description:</strong> {description}
+				<br />
+				<strong>Created at:</strong> {creationTime}
+			</div>
+
+			<br />
+			<br />
+
+			{/* Deadline Countdown Timer */}
+			<div>
+				{is_completed ? (
+					""
+				) : (
 					<span style={{ fontSize: "20px", marginTop: "10px" }}>
 						{countdown}
 					</span>
-				</div>
-			)}
+				)}
+			</div>
+
+			{/* Buttons */}
 			<div
 				style={{
 					display: "flex",
